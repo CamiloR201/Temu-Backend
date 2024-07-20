@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Dependency directories
+node_modules/
+
+# Environment files
+.env
+
+# TypeScript output
+dist/
+build/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# TypeORM and migration files
+*.sqlite
+*.db
