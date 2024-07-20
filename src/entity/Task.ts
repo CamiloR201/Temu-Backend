@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './User';
 
 @Entity()
@@ -23,6 +23,12 @@ export class Task {
 
   @ManyToOne(() => User, user => user.tasks)
   user!: User;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt!: Date;
 
   constructor(title: string, dueDate: Date, priority: number, status: string, user: User, description?: string) {
     this.title = title;

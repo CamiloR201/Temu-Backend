@@ -13,7 +13,7 @@
   },
   "include": [
     "src/**/*.ts"                          // Incluye todos los archivos TypeScript en el directorio src
-  ],
+, "src/data-source.ts"  ],
   "exclude": [
     "node_modules",                        // Excluye el directorio node_modules
     "dist"                                 // Excluye el directorio de salida

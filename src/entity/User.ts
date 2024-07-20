@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Task } from './Task';
 
 @Entity()
@@ -17,6 +17,12 @@ export class User {
 
   @OneToMany(() => Task, task => task.user)
   tasks!: Task[];
+
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt!: Date;
 
   constructor(name: string, email: string, password: string, tasks?: Task[]) {
     this.name = name;
