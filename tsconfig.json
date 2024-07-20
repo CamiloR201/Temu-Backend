@@ -1,14 +1,21 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "commonjs",
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true
-    },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules"]
-  }
-  
+  "compilerOptions": {
+    "target": "es6",                       // Define el objetivo del compilador (ES6 para mayor compatibilidad)
+    "module": "commonjs",                  // Usado por Node.js para importar y exportar módulos
+    "outDir": "./dist",                    // Directorio donde se guardarán los archivos JavaScript compilados
+    "rootDir": "./src",                    // Directorio raíz de los archivos TypeScript
+    "strict": true,                        // Activa todas las comprobaciones estrictas
+    "esModuleInterop": true,               // Habilita la interoperabilidad con módulos CommonJS
+    "skipLibCheck": true,                  // Omite la comprobación de tipo en archivos de declaración de bibliotecas
+    "forceConsistentCasingInFileNames": true, // Asegura que los nombres de archivo son consistentes
+    "emitDecoratorMetadata": true,         // Habilita la generación de metadata para los decoradores (requerido para TypeORM)
+    "experimentalDecorators": true         // Habilita el soporte para decoradores (requerido para TypeORM)
+  },
+  "include": [
+    "src/**/*.ts"                          // Incluye todos los archivos TypeScript en el directorio src
+  ],
+  "exclude": [
+    "node_modules",                        // Excluye el directorio node_modules
+    "dist"                                 // Excluye el directorio de salida
+  ]
+}
