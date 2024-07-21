@@ -5,10 +5,12 @@ import { dataSource } from './data-source';
 import taskRouter from './routes/taskRoutes';
 import UseRouter from './routes/userRoutes';
 import * as dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(cors());
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
