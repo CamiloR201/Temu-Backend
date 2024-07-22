@@ -1,12 +1,6 @@
 import { Request, Response } from 'express';
-import { User } from '../entity/User';
-import { dataSource } from '../data-source';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import { body, validationResult } from 'express-validator';
-
-const jwtSecret = process.env.JWT_SECRET || 'default_secret';
-const userRepository = dataSource.getRepository(User);
+import { authService } from '../services/authService';
 
 export const registerUser = [
     body('email').isEmail().withMessage('Invalid email address'),
@@ -20,20 +14,12 @@ export const registerUser = [
 
         try {
             const { email, password, name } = req.body;
-
-            const existingUser = await userRepository.findOneBy({ email });
-            if (existingUser) {
-                return res.status(400).json({ message: 'Email already in use' });
-            }
-
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const user = userRepository.create({ email, password: hashedPassword, name });
-            const result = await userRepository.save(user);
-
-            const token = jwt.sign({ userId: result.id }, jwtSecret, { expiresIn: '1h' });
-
-            res.status(201).json({ user: { email: result.email, name: result.name }, token });
+            const result = await authService.registerUser(email, password, name);
+            res.status(201).json(result);
         } catch (error) {
+            if ((error as Error).message === 'Email already in use') {
+                return res.status(400).json({ message: (error as Error).message });
+            }
             res.status(500).json({ message: 'Error registering user', error });
         }
     }
@@ -51,23 +37,12 @@ export const loginUser = [
 
         try {
             const { email, password } = req.body;
-
-
-            const user = await userRepository.findOneBy({ email });
-            if (!user) {
-                return res.status(400).json({ message: 'Invalid credentials' });
-            }
-
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return res.status(400).json({ message: 'Invalid credentials' });
-            }
-
-  
-            const token = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: '1h' });
-
-            res.status(200).json({ user: { email: user.email, name: user.name }, token });
+            const result = await authService.loginUser(email, password);
+            res.status(200).json(result);
         } catch (error) {
+            if ((error as Error).message === 'Invalid credentials') {
+                return res.status(400).json({ message: (error as Error).message });
+            }
             res.status(500).json({ message: 'Error logging in', error });
         }
     }
