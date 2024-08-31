@@ -7,7 +7,7 @@ export const dataSource = new DataSource({
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: '123',
+    password: 'root',
     database: 'taks',
     entities: [User, Task],
     migrations: ['src/migration/*.ts'],
