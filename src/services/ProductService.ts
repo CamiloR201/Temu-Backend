@@ -1,12 +1,12 @@
-import { AppDataSource } from '../data-source';
+import { dataSource } from '../data-source';
 import { Repository } from 'typeorm';
-import { Product } from '../entities/Product';
+import { Product } from '../entity/Product';
 
 class ProductService {
     private productRepository: Repository<Product>;
 
     constructor() {
-        this.productRepository = AppDataSource.getRepository(Product);
+        this.productRepository = dataSource.getRepository(Product);
     }
 
     async createProduct(productData: Partial<Product>): Promise<Product> {
